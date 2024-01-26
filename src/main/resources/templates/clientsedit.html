@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/clientsedit.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="main-page">
+        <!-- Side bar -->
+        <div class="sidebar">
+            <div class="logo-section">
+                <img th:src="@{/images/fabo.logo.png}" alt="Your Logo">
+            </div>
+            <div class="sbbuttons">
+                <button id="button1" onclick="toggleSubMenu('submenu1')">Client<br>Management</button>
+                <ul class="submenu" id="submenu1">
+                    <li onclick="openPopup('addClientsPopup')">Add Clients</li>
+                    <li > Manage Clients</li>
+                </ul>
+    
+                <button id="button2" onclick="toggleSubMenu('submenu2')">Client User <br>Management</button>
+                <ul class="submenu" id="submenu2">
+                    <li onclick="openPopup('addUserPopup')">Add User</li>
+                    <li > Manage Users</li>
+                </ul>
+    
+                <button id="button3" onclick="toggleSubMenu('submenu3')">Admin User <br>Management</button>
+                <ul class="submenu" id="submenu3">
+                    <li onclick="openPopup('addAdminPopup')">Add Admin</li>
+                    <li >ManageAdmins</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="wrapper">
+                <div class="title">Edit Client</div>
+           	      <form th:action="@{/clients/{Id} (Id=${client.Id})}" th:object="${client}" method="POST">
+
+                    <div class="user-detail">
+                        <div class="input-box">
+						    <span class="details">Store Name <sup style="color:red;">*</sup> </span>
+						    <input type="text" th:field="*{storeName}" id="storeNameInput" th:readonly="true" placeholder="Enter Store Name" required>
+						</div>
+
+                        <div class="input-box">
+                            <span class="details">Store Code <sup style="color:red;">*</sup> </span>
+                            <input type="text" th:field = "*{storeCode}" th:readonly="true" placeholder="Enter Store Code" required >
+                        </div>
+                        
+                        <div class="input-box">
+                            <span class="details">Owner Name <sup style="color:red;">*</sup> </span>
+                            <input type="text" th:field="*{ownerName}" placeholder="Enter Owner Name" required>
+                        </div>
+
+                        <div class="input-box">
+                            <span class="details">E-Mail <sup style="color:red;">*</sup> </span>
+                            <input type="email" th:field = "*{email}" placeholder="Enter E-Mail" required >
+                        </div>
+
+                        <div class="input-box">
+                            <span class="details">Owner Contact <sup style="color:red;">*</sup> </span>
+                            <input type="tel" th:field = "*{ownerContact}" oninput="validateNumericInput(this)" placeholder="Enter Owner Contact" required >
+                        </div>
+
+                        <div class="input-box">
+                            <span class="details">Store Contact <sup style="color:red;">*</sup> </span>
+                            <input type="tel" th:field = "*{storeContact}" oninput="validateNumericInput(this)" placeholder="Enter Store Contact" >
+                        </div>
+                        
+                        <div class="input-box">
+                            <span class="details">Gst Number</span>
+                            <input type="text" th:field = "*{gstNo}" placeholder="Enter Store Code" required >
+                        </div>
+                        
+						<div class="input-box">
+						    <span class="details">City <sup style="color:red;">*</sup> </span>
+						    <input type="text" th:field="*{city}" id="cityInput" placeholder="Enter City" required>
+						</div>
+						
+						<div class="input-box">
+						    <span class="details">State <sup style="color:red;">*</sup> </span>
+						    <input type="text" th:field="*{state}" id="stateInput" placeholder="Enter State" required>
+						</div>
+						
+					  <div class="input-box">
+                                <label for="details" class="details">Full Address <sup style="color:red;">*</sup> </label>
+                                 <textarea id="fullAddressInput"  th:field="*{fullAddress}" name="fullAddress" placeholder="Enter Full Address" required></textarea>
+                            </div>
+
+                        <div class="input-box">
+                            <span class="details">GMB Profile Link</span>
+                            <input type="text" th:field = "*{gmbProfileLink}" placeholder="Enter GMB Profile Link">
+                        </div>
+
+                    </div>
+                    <div class="button">
+                        <input type="submit" value="Update">
+                        <li><a th:href="@{/faboclients}">Close</a></li>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+    
+  <script>
+  // Get references to the input fields
+  const storeNameInput = document.getElementById('storeNameInput');
+  const cityInput = document.getElementById('cityInput');
+  const stateInput = document.getElementById('stateInput');
+  const fullAddressInput = document.getElementById('fullAddressInput');
+
+  // Add event listeners to storeName, city, and state input fields
+  storeNameInput.addEventListener('input', updateFullAddress);
+  cityInput.addEventListener('input', updateFullAddress);
+  stateInput.addEventListener('input', updateFullAddress);
+
+  // Function to update fullAddress field
+  function updateFullAddress() {
+      const storeName = storeNameInput.value;
+      const city = cityInput.value;
+      const state = stateInput.value;
+
+      // Update fullAddress based on storeName, city, and state
+      const updatedFullAddress = `${storeName}, ${city}, ${state}`;
+      fullAddressInput.value = updatedFullAddress;
+  }
+	</script>
+</body>
+
+</html>
+
+        
